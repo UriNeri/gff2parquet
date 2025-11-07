@@ -2,7 +2,7 @@
 
 CLI tool for working with GFF3 genomic annotation files using Polars + Polars-bio for evaluation and processing.
 
-## Commands
+## features
 
 - **Convert** GFF3 files to Parquet, CSV, or JSON formats
 - **Merge** multiple GFF files with optional column normalization
@@ -16,13 +16,13 @@ CLI tool for working with GFF3 genomic annotation files using Polars + Polars-bi
 ## Installation
 using (pixi)[https://pixi.sh/latest/] (recommended)
 ```bash
-# Using pixi x
 pixi install
 ```
 Or with pip:
 ```
 pip install . -e 
 ```
+
 ## Dependencies:
 Base:
 - python >= 3.9
@@ -170,32 +170,27 @@ gff2parquet filter input.gff3 --type CDS -o stdout #| grep "gene_id"
 [uneri]$ gff2parquet print data/downloaded_gff/groupI_GCA_000859985.2.gff --head 10   | grep "repeat"
 Found 1 file(s) matching pattern 'data/downloaded_gff/groupI_GCA_000859985.2.gff'
 Scanning: data/downloaded_gff/groupI_GCA_000859985.2.gff
-│ JN555585.1 ┆ Genbank ┆ repeat_region ┆ 1     ┆ … ┆ +      ┆ null  ┆ [{"ID","id-JN ┆ data/downloa │
-│ JN555585.1 ┆ Genbank ┆ repeat_region ┆ 98    ┆ … ┆ +      ┆ null  ┆ [{"ID","id-JN ┆ data/downloa │
+| JN555585.1 | Genbank | inverted_repeat | 1     | 9213   | null  | +      | null  | [{"ID","id-JN555585.1:1..9213"}, {"Note","TRL%3B inverted repeat flanking UL"}, … {"rpt_type","inverted"}] | data/downloaded_gff/groupI_GCA_000859985.2.gff |
+| JN555585.1 | Genbank | repeat_region   | 1     | 399    | null  | +      | null  | [{"ID","id-JN555585.1:1..399"}, {"Note","'a' sequence"}, … {"rpt_type","terminal"}]                        | data/downloaded_gff/groupI_GCA_000859985.2.gff |
+| JN555585.1 | Genbank | repeat_region   | 98    | 320    | null  | +      | null  | [{"ID","id-JN555585.1:98..320"}, {"Note","'a' sequence reiteration set"}, … {"rpt_unit_range","98..109"}]  | data/downloaded_gff/groupI_GCA_000859985.2.gff |
 ```
 
 ## Development
 
-### Using Pixi (recommended)
-
+### Using Pixi 
+Default environment (minimal)
 ```bash
-# Default environment (minimal)
 pixi install
 pixi shell
-
-# Notebook environment (includes Jupyter)
+```
+Notebook environment (includes Jupyter):
+```bash
 pixi install -e notebook
 pixi run -e notebook jupyter lab
 ```
 
 ## License
-
 See LICENSE file.
 
 ## Citation
-
-If you use this tool in your research, please cite:
-```
-gff2parquet: Fast GFF3 processing with Polars
-https://github.com/yourusername/gff2parquet
-```
+Neri and the gang
