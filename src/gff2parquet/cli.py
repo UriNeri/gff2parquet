@@ -14,6 +14,11 @@ import polars as pl
 from typing import Tuple, Dict
 import polars_bio as pb
 
+# so printing to stdout doesn't break, line wrap, or truncate.
+pl.Config.set_tbl_rows(123123)
+pl.Config.set_tbl_cols(123123) # should be large enough
+pl.Config.set_fmt_str_lengths(2100) 
+pl.Config.set_tbl_width_chars(2100) 
 
 DEFAULT_CODE = 1
 DEFAULT_FRAME = 1
@@ -308,7 +313,7 @@ def cmd_extract(args):
     result_df = extract_sequences_from_gff(
         lf,
         fasta_files,
-        output_type=args.outaa,
+        output_type=args.outfmt,
         genetic_code=args.genetic_code
     )
     
@@ -327,8 +332,10 @@ def cmd_extract(args):
         print("Done!", file=sys.stderr)
     elif args.format == "parquet":
         if args.output in ['-', 'stdout', None]:
-            print("Error: Cannot write Parquet to stdout", file=sys.stderr)
-            sys.exit(1)
+            # print("Error: Cannot write Parquet to stdout", file=sys.stderr)
+            result_df.write_parquet(file=sys.stdout)
+
+            # sys.exit(1)
         result_df.write_parquet(args.output)
         print("Done!", file=sys.stderr)
 
@@ -843,10 +850,7 @@ def cmd_split(args):
 def cmd_print(args):
     """Print GFF contents to stdout."""
     # first set polars config to display all columns and rows, and not wrap long lines
-    pl.Config.set_tbl_rows(123123)
-    pl.Config.set_tbl_cols(12313)
-    pl.Config.set_fmt_str_lengths(2100) 
-    pl.Config.set_tbl_width_chars(2100) 
+
 
     pl.Config.set_tbl_formatting("MARKDOWN")
     pl.Config.set_tbl_hide_dataframe_shape(True)
@@ -949,10 +953,10 @@ Examples:
   %(prog)s extract annotations.gff3 genome.fasta --type CDS -o cds.fasta
   
   # Extract and translate CDS to proteins
-  %(prog)s extract annotations.gff3 genome.fasta --type CDS --outaa amino -o proteins.fasta
+  %(prog)s extract annotations.gff3 genome.fasta --type CDS --outfmt amino -o proteins.fasta
   
   # Extract with custom genetic code (mitochondrial)
-  %(prog)s extract annotations.gff3 mitogenome.fasta --outaa amino --genetic-code 2 -o proteins.fasta
+  %(prog)s extract annotations.gff3 mitogenome.fasta --outfmt amino --genetic-code 2 -o proteins.fasta
   
   # Extract genes containing "kinase" in annotations
   %(prog)s extract annotations.gff3 genome.fasta --name-contains kinase --type gene -o kinases.fasta
@@ -963,7 +967,7 @@ Examples:
   # Combine operations: merge, filter, and extract
   %(prog)s merge sample*.gff3 -o merged.parquet
   %(prog)s filter merged.parquet --type CDS --min-length 500 -o long_cds.gff3 -f gff
-  %(prog)s extract long_cds.gff3 genome.fasta --outaa amino -o long_proteins.fasta
+  %(prog)s extract long_cds.gff3 genome.fasta --outfmt amino -o long_proteins.fasta
 
 Genetic Codes (for --genetic-code):
   1  - Standard (default for most organisms)
@@ -1114,10 +1118,10 @@ Examples:
   %(prog)s annotations.gff3 genome.fasta --type CDS -o cds.fasta
   
   # Extract and translate CDS to proteins (bacterial code)
-  %(prog)s annotations.gff3 genome.fasta --type CDS --outaa amino -o proteins.fasta
+  %(prog)s annotations.gff3 genome.fasta --type CDS --outfmt amino -o proteins.fasta
   
   # Extract mitochondrial genes with mitochondrial genetic code
-  %(prog)s mito.gff3 mitogenome.fasta --outaa amino --genetic-code 2 -o mito_proteins.fasta
+  %(prog)s mito.gff3 mitogenome.fasta --outfmt amino --genetic-code 2 -o mito_proteins.fasta
   
   # Extract genes containing "kinase" in their name/attributes
   %(prog)s annotations.gff3 genome.fasta --name-contains kinase -o kinases.fasta
@@ -1129,14 +1133,14 @@ Examples:
   %(prog)s annotations.gff3 genome.fasta --id-columns seqid start end type -o custom.fasta
   
   # Extract long CDS and translate
-  %(prog)s annotations.gff3 genome.fasta --type CDS --min-length 500 --outaa amino -o long_proteins.fasta
+  %(prog)s annotations.gff3 genome.fasta --type CDS --min-length 500 --outfmt amino -o long_proteins.fasta
         """)
     extract_parser.add_argument('gff', help='Input GFF3 file or glob pattern')
     extract_parser.add_argument('fasta', nargs='+', help='Input FASTA file(s)')
     extract_parser.add_argument('-o', '--output', help='Output file (use "-" or "stdout" for stdout with FASTA/CSV)')
     extract_parser.add_argument('-f', '--format', choices=['fasta', 'csv', 'parquet'],
                                default='fasta', help='Output format (default: fasta)')
-    extract_parser.add_argument('--outaa', choices=['amino', 'nucleic'], default='nucleic',
+    extract_parser.add_argument('--outfmt', choices=['amino', 'nucleic'], default='nucleic',
                                help='Output amino acids (translate) or nucleic acids (default: nucleic)')
     extract_parser.add_argument('--genetic-code', type=int, default=11,
                                help='Genetic code for translation (default: 11 - Bacterial/Plastid)')

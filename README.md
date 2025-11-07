@@ -73,10 +73,10 @@ gff2parquet merge file1.gff3 file2.gff3 --normalize -o combined.parquet
 gff2parquet extract annotations.gff3 genome.fasta --type CDS -o cds.fasta
 
 # Extract and translate to proteins (bacterial genetic code)
-gff2parquet extract annotations.gff3 genome.fasta --type CDS --outaa amino -o proteins.fasta
+gff2parquet extract annotations.gff3 genome.fasta --type CDS --outfmt amino -o proteins.fasta
 
 # Extract from multiple genomes with custom genetic code
-gff2parquet extract "*.gff3" genome*.fasta --outaa amino --genetic-code 2 -o mito_proteins.fasta
+gff2parquet extract "*.gff3" genome*.fasta --outfmt amino --genetic-code 2 -o mito_proteins.fasta
 ```
 
 ### Split by Column
@@ -111,7 +111,7 @@ gff2parquet merge sample*.gff3 -o all_samples.parquet
 gff2parquet filter all_samples.parquet --type CDS --min-length 600 -o long_cds.gff -f gff
 
 # 3. Extract and translate sequences
-gff2parquet extract long_cds.gff genome*.fasta --outaa amino -o proteins.fasta
+gff2parquet extract long_cds.gff genome*.fasta --outfmt amino -o proteins.fasta
 ```
 
 ### Quality Control
