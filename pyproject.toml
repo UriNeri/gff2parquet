@@ -2,7 +2,7 @@
 name = "gff2parquet"
 dynamic = ["version"]
 authors = [
-    { name = "Uri Neri", email = "uneri@lbl.gov" },
+    { name = "Uri Neri", email = "uri.neri@gmail.com" },
 ]
 description = "GFF3 cli utils (convert, merge, filter, split, print, extract)"
 readme = "README.md"

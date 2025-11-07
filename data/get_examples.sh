@@ -5,9 +5,8 @@
 
 # Define Baltimore groups (examples: dsDNA - group I; ssDNA - group II; dsRNA - group III, etc.)
 # We'll use some representative viruses for several Baltimore groups as examples
-# alias datasets='/clusterfs/jgi/scratch/science/metagen/neri/tests/test_ncbi_virus/datasets'
-cp /clusterfs/jgi/scratch/science/metagen/neri/tests/test_ncbi_virus/datasets ./datasets
 
+# requires ncbi-datasets-cli (https://github.com/ncbi/datasets)
 declare -A baltimore_examples_extended
 baltimore_examples_extended=(
     ["I"]="GCA_000859985.2" #"Herpes simplex virus type 1"     # dsDNA viruses
