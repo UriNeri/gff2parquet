@@ -27,13 +27,13 @@ pip install . -e
 Base:
 - python >= 3.9
 - [polars](https://www.pola.rs/)
-- [polars-bio](https://github.com/biodatageeks/polars-bio)
+- [polars-bio](https://github.com/biodatageeks/polars-bio)  
 For the [example notebook](data/example.ipynb), you will also need:
 - [ipykernel](https://github.com/ipython/ipykernel)
 - [jupyter](https://jupyter.org/)
 - [jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
 - [pyarrow](https://arrow.apache.org/docs/python/index.html) (only really used to get the parquets metadata)
-- [ncbi-datasets](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/datasets/) (for downloading example datasets)
+- [ncbi-datasets](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/datasets/) (for downloading example datasets, although some are already included)
 
 ## Quick Start
 See [example notebook](data/example.ipynb) for some more examples...
