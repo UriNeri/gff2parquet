@@ -1,7 +1,7 @@
 # gff2parquet
 
-CLI tool for working with GFF3 genomic annotation files using Polars + Polars-bio for evaluation and processing.
-
+CLI tool for working with GFF3 genomic annotation files using Polars + Polars-bio for evaluation and processing.  
+on pypi for convenience.  Not meant for serious use, but it works for me...
 ## features
 
 - **Convert** GFF3 files to Parquet, CSV, or JSON formats
