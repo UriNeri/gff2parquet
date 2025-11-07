@@ -1,40 +1,3 @@
-#smulated inputs
-# simulated_inputs/
-#
-#logs
-logs/
-
-#cursor
-.cursorrules
-.cursorignore
-
-# continue
-.continueignore
-.continuerules
-
-#tmp
-tmp/
-
-# outputs
-*.tar.gz
-*.tsv.zst
-*.tar.zst
-*.tsv.gz
-*.sam.gz
-*fa.gz
-slurmsout/
-outputs/
-imgvr4_data/
-imgvr4_data/crispr-host-prediction/nucleotide_db/
-**/raw_outputs
-**/simulated_data
-**/ground_truth.tsv
-**/bash_scripts
-**/tools_results.tsv
-**/.parquet
-results/real_data/raw_outputs/
-results/real_data/results/
-**/tools_results.tsv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -44,6 +7,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+.pixi/
 .Python
 build/
 develop-eggs/
@@ -189,35 +153,17 @@ cython_debug/
 # vscode
 .vscode/
 .vscode/*
-# quarto
-.quarto/
-# public/
 
-# /.quarto/
-
-# rust_simulator/
-rust_simulator/src/target/debug/
-
-# run_t_*
-results/simulated/run_t_*
 # pixi environments
 .pixi
 *.egg-info
 
 
-results/*
-results_mismatches/*
-*.tsv
 
 .ruff_cache/
-IMGVR4_SEQUENCES.fna.zst
 
-# temporary - will comment this once done
-draft/
-src/tests/
 tests/
-src/bench/obsolete/
-
 datasets
 data/test_outputs
 dori_wrapper.sh
+dori_wrapper
